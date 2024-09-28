@@ -69,6 +69,7 @@ public class HealthBarRenderer {
         int absorptionHearts = Math.min(20 - normalHearts, Mth.ceil((double) currentAbsorptionHealth / 2.0));
 
         for (int currentHeart = 0; currentHeart < normalHearts + absorptionHearts; ++currentHeart) {
+
             int currentPosX = posX + (currentHeart % 10) * 8;
             int currentPosY = posY - (currentHeart / 10) * 10;
 
@@ -80,7 +81,12 @@ public class HealthBarRenderer {
                 currentPosY -= 2;
             }
 
+            guiGraphics.pose().pushPose();
+
+            // renders the black heart outline and background (only visible for half hearts)
             this.renderHeart(guiGraphics, HeartType.CONTAINER, currentPosX, currentPosY, blink, false, hardcore);
+            // then the first call to renderHeart renders the heart from the layer below in case the current layer heart is just half a heart
+            // the second call renders the actual heart from the current layer
             if (currentHeart >= normalHearts) {
                 int currentAbsorption = currentHeart * 2 - normalHearts * 2;
                 if (currentAbsorption < currentAbsorptionHealth) {
@@ -111,10 +117,14 @@ public class HealthBarRenderer {
                 }
                 this.renderHeart(guiGraphics, HeartType.forPlayer(player, false, orange || OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeFirstRow && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1), currentPosX, currentPosY, false, halfHeart, hardcore);
             }
+
+            guiGraphics.pose().popPose();
         }
     }
 
     private void renderHeart(GuiGraphics guiGraphics, HeartType heartType, int posX, int posY, boolean blink, boolean halfHeart, boolean hardcore) {
+        // same offset as font shadow to avoid issues with optimization mods batching drawn layers together
+        guiGraphics.pose().translate(0.0F, 0.0F, 0.03F);
         guiGraphics.blit(heartType.textureSheet, posX, posY, heartType.getX(halfHeart, blink), heartType.getY(hardcore), 9, 9);
     }
 
