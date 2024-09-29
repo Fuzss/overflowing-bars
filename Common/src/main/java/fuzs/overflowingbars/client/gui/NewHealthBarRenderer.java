@@ -1,4 +1,4 @@
-package fuzs.overflowingbars.client.handler;
+package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
 import net.minecraft.client.gui.Gui;

@@ -1,4 +1,4 @@
-package fuzs.overflowingbars.client.handler;
+package fuzs.overflowingbars.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.overflowingbars.OverflowingBars;

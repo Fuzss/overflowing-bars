@@ -6,7 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "client.GuiFabric2Mixin"
+    "client.GuiFabricMixin"
   ],
   "injectors": {
     "defaultRequire": 1

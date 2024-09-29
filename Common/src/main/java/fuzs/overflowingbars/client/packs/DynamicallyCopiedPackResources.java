@@ -2,7 +2,7 @@ package fuzs.overflowingbars.client.packs;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.client.handler.NewHealthBarRenderer;
+import fuzs.overflowingbars.client.gui.NewHealthBarRenderer;
 import fuzs.puzzleslib.api.resources.v1.AbstractModPackResources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

@@ -2,18 +2,20 @@ package fuzs.overflowingbars.neoforge.client;
 
 import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.client.OverflowingBarsClient;
-import fuzs.overflowingbars.config.ClientConfig;
-import fuzs.overflowingbars.neoforge.client.handler.GuiLayersHandler;
+import fuzs.overflowingbars.client.handler.GuiLayerHandler;
 import fuzs.overflowingbars.neoforge.client.handler.HoveringHotbarHandler;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -32,19 +34,18 @@ public class OverflowingBarsNeoForgeClient {
     private static void registerLoadingHandlers(IEventBus eventBus) {
         eventBus.addListener((final RegisterGuiLayersEvent evt) -> {
             evt.registerAbove(VanillaGuiLayers.VEHICLE_HEALTH, OverflowingBars.id("toughness_level"),
-                    GuiLayersHandler.TOUGHNESS_LEVEL
+                    (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+                        GuiLayerHandler.onRenderToughnessLevel(Minecraft.getInstance(), guiGraphics, deltaTracker);
+                    }
             );
         });
     }
 
     private static void registerEventHandlers(IEventBus eventBus) {
-//        eventBus.addListener(GuiLayersHandler::onBeforeRenderGuiOverlay);
-        eventBus.addListener(HoveringHotbarHandler::onBeforeRenderGui);
+        // try to not push a pose on the stack when the event is cancelled
+        eventBus.addListener(EventPriority.LOW, HoveringHotbarHandler::onBeforeRenderGui);
         eventBus.addListener(HoveringHotbarHandler::onAfterRenderGui);
         eventBus.addListener(HoveringHotbarHandler::onBeforeRenderGuiLayer);
-//        eventBus.addListener((final CustomizeGuiOverlayEvent.Chat evt) -> {
-//            evt.setPosY(evt.getPosY() - OverflowingBars.CONFIG.get(ClientConfig.class).hotbarOffset);
-//        });
     }
 
     private static void registerModIntegrations() {

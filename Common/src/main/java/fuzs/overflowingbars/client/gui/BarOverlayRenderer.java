@@ -1,4 +1,4 @@
-package fuzs.overflowingbars.client.handler;
+package fuzs.overflowingbars.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.overflowingbars.OverflowingBars;
@@ -39,16 +39,16 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderToughnessLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int height, boolean rowCount, boolean leftSide, boolean unmodified) {
+    public static void renderToughnessLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int guiHeight, boolean rowCount, boolean leftSide, boolean unmodified) {
         if (minecraft.getCameraEntity() instanceof Player player) {
             int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91);
-            int posY = guiGraphics.guiHeight() - height;
+            int posY = guiGraphics.guiHeight() - guiHeight;
             ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), leftSide,
                     unmodified
             );
             if (rowCount && !unmodified) {
                 int toughnessValue = Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-                RowCountRenderer.drawBarRowCount(guiGraphics, posX + (leftSide ? -2 : 2), posY, toughnessValue, leftSide,
+                RowCountRenderer.drawBarRowCount(guiGraphics, posX - 2, posY, toughnessValue, leftSide,
                         minecraft.font
                 );
             }

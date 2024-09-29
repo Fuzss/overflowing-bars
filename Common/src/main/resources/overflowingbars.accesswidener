@@ -1,4 +1,6 @@
 accessWidener   v2  named
+accessible  field   net/minecraft/world/entity/ai/attributes/RangedAttribute    maxValue    D
+mutable field   net/minecraft/world/entity/ai/attributes/RangedAttribute    maxValue    D
 accessible  class   net/minecraft/client/gui/Gui$HeartType
 accessible  field   net/minecraft/client/gui/Gui$HeartType  full    Lnet/minecraft/resources/ResourceLocation;
 accessible  field   net/minecraft/client/gui/Gui$HeartType  fullBlinking    Lnet/minecraft/resources/ResourceLocation;

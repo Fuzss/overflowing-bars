@@ -13,14 +13,12 @@ public class HotbarSpriteHelper {
 
     public static void blitHotbarSelectionSprite(GuiGraphics guiGraphics) {
         if (Minecraft.getInstance().getCameraEntity() instanceof Player player) {
-            int posX = guiGraphics.guiWidth() / 2;
             RenderSystem.enableBlend();
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0F, 0.0F, -90.03F);
-            GuiGraphicsHelper.blitTiledSprite(guiGraphics, HOTBAR_SELECTION_SPRITE,
-                    posX - 91 - 1 + player.getInventory().selected * 20, guiGraphics.guiHeight() - 22 - 1, 24, 24, 24, 23
-            );
-
+            guiGraphics.pose().translate(0.0F, 0.0F, -95.0F);
+            int posX = guiGraphics.guiWidth() / 2 - 91 - 1 + player.getInventory().selected * 20;
+            int posY = guiGraphics.guiHeight() - 22 - 1;
+            GuiGraphicsHelper.blitTiledSprite(guiGraphics, HOTBAR_SELECTION_SPRITE, posX, posY, 24, 24, 24, 23);
             guiGraphics.pose().popPose();
             RenderSystem.disableBlend();
         }
