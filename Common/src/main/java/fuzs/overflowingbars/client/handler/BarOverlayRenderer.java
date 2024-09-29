@@ -8,17 +8,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
 
 public class BarOverlayRenderer {
-    static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
     static final ResourceLocation OVERFLOWING_ICONS_LOCATION = OverflowingBars.id("textures/gui/icons.png");
 
-    public static void renderHealthLevelBars(GuiGraphics guiGraphics, int screenWidth, int screenHeight, Minecraft minecraft, int leftHeight, boolean rowCount) {
-        Player player = getCameraPlayer(minecraft);
-        if (player != null) {
-            int posX = screenWidth / 2 - 91;
-            int posY = screenHeight - leftHeight;
+    public static void renderHealthLevelBars(Minecraft minecraft, GuiGraphics guiGraphics, int leftHeight, boolean rowCount) {
+        if (minecraft.getCameraEntity() instanceof Player player) {
+            int posX = guiGraphics.guiWidth() / 2 - 91;
+            int posY = guiGraphics.guiHeight() - leftHeight;
             HealthBarRenderer.INSTANCE.renderPlayerHealth(guiGraphics, posX, posY, player, minecraft.getProfiler());
             if (rowCount) {
                 int allHearts = Mth.ceil(player.getHealth());
@@ -29,11 +26,10 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderArmorLevelBar(GuiGraphics guiGraphics, int screenWidth, int screenHeight, Minecraft minecraft, int leftHeight, boolean rowCount, boolean unmodified) {
-        Player player = getCameraPlayer(minecraft);
-        if (player != null) {
-            int posX = screenWidth / 2 - 91;
-            int posY = screenHeight - leftHeight;
+    public static void renderArmorLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int leftHeight, boolean rowCount, boolean unmodified) {
+        if (minecraft.getCameraEntity() instanceof Player player) {
+            int posX = guiGraphics.guiWidth() / 2 - 91;
+            int posY = guiGraphics.guiHeight() - leftHeight;
             ArmorBarRenderer.renderArmorBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), unmodified);
             if (rowCount && !unmodified) {
                 RowCountRenderer.drawBarRowCount(guiGraphics, posX - 2, posY, player.getArmorValue(), true,
@@ -43,26 +39,20 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderToughnessLevelBar(GuiGraphics guiGraphics, int screenWidth, int screenHeight, Minecraft minecraft, int rightHeight, boolean rowCount, boolean left, boolean unmodified) {
-        Player player = getCameraPlayer(minecraft);
-        if (player != null) {
-            int posX = screenWidth / 2 + (left ? -91 : 91);
-            int posY = screenHeight - rightHeight;
-            ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), left,
+    public static void renderToughnessLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int height, boolean rowCount, boolean leftSide, boolean unmodified) {
+        if (minecraft.getCameraEntity() instanceof Player player) {
+            int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91);
+            int posY = guiGraphics.guiHeight() - height;
+            ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), leftSide,
                     unmodified
             );
             if (rowCount && !unmodified) {
                 int toughnessValue = Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-                RowCountRenderer.drawBarRowCount(guiGraphics, posX + (left ? -2 : 2), posY, toughnessValue, left,
+                RowCountRenderer.drawBarRowCount(guiGraphics, posX + (leftSide ? -2 : 2), posY, toughnessValue, leftSide,
                         minecraft.font
                 );
             }
         }
-    }
-
-    @Nullable
-    private static Player getCameraPlayer(Minecraft minecraft) {
-        return minecraft.getCameraEntity() instanceof Player player ? player : null;
     }
 
     public static void resetRenderState() {

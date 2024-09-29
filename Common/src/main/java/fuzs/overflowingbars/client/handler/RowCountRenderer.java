@@ -11,7 +11,7 @@ import net.minecraft.util.Mth;
 import java.util.stream.IntStream;
 
 public class RowCountRenderer {
-    private static final ResourceLocation TINY_NUMBERS_LOCATION = new ResourceLocation(OverflowingBars.MOD_ID, "textures/font/tiny_numbers.png");
+    private static final ResourceLocation TINY_NUMBERS_LOCATION = OverflowingBars.id("textures/font/tiny_numbers.png");
 
     public static void drawBarRowCount(GuiGraphics guiGraphics, int posX, int posY, int barValue, boolean left, Font font) {
         drawBarRowCount(guiGraphics, posX, posY, barValue, left, 20, font);

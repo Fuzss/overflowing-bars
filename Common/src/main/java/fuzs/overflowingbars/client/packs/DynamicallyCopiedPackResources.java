@@ -32,6 +32,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * All this is unused currently and serves as a foundation for a future dynamically colored hearts implementation.
+ */
 public class DynamicallyCopiedPackResources extends AbstractModPackResources {
     private final ResourceManager resourceManager;
     private final VanillaPackResources vanillaPackResources;

@@ -5,6 +5,8 @@ import fuzs.puzzleslib.api.config.v3.ConfigCore;
 import net.minecraft.ChatFormatting;
 
 public class ClientConfig implements ConfigCore {
+    static final String CATEGORY_GENERAL = "general";
+
     @Config
     public IconRowConfig health = new IconRowConfig();
     @Config
@@ -13,10 +15,13 @@ public class ClientConfig implements ConfigCore {
     public ToughnessRowConfig toughness = new ToughnessRowConfig();
     @Config
     public RowCountConfig rowCount = new RowCountConfig();
-    @Config(category = "general", description = "Move chat messages above armor/absorption bar.")
+    @Config(category = CATEGORY_GENERAL, description = "Move chat messages above armor/absorption bar.")
     public boolean moveChatAboveArmor = true;
-    @Config(category = "general", description = "Move the experience level display above the experience bar.")
+    @Config(category = CATEGORY_GENERAL, description = "Move the experience level display above the experience bar.")
     public boolean moveExperienceAboveBar = true;
+    @Config(category = CATEGORY_GENERAL, description = "Height offset for the hotbar from the screen bottom.")
+    @Config.IntRange(min = 0)
+    public int hotbarOffset = 18;
 
     public static class IconRowConfig implements ConfigCore {
         @Config(description = "Add layers to this bar. When disabled any modifications to the bar from this mod will be turned off.")

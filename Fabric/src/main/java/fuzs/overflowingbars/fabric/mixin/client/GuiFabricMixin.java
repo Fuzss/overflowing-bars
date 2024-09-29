@@ -6,7 +6,6 @@ import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.client.handler.BarOverlayRenderer;
 import fuzs.overflowingbars.client.helper.ChatOffsetHelper;
 import fuzs.overflowingbars.config.ClientConfig;
-import fuzs.overflowingbars.fabric.api.v1.client.SharedGuiHeights;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -40,11 +39,9 @@ abstract class GuiFabricMixin {
     protected int displayHealth;
 
     @Inject(method = "renderHearts", at = @At("HEAD"), cancellable = true)
-    private void renderHearts(GuiGraphics guiGraphics, Player player, int x, int y, int height, int i, float f, int j, int k, int l, boolean bl, CallbackInfo callback) {
+    private void renderHearts(GuiGraphics guiGraphics, Player player, int x, int y, int height, int offsetHeartIndex, float maxHealth, int currentHealth, int displayHealth, int absorptionAmount, boolean renderHighlight, CallbackInfo callback) {
         if (OverflowingBars.CONFIG.get(ClientConfig.class).health.allowLayers) {
-            int leftHeight = 39;
-            final int raisedHeight = FabricLoader.getInstance().getObjectShare().get("raised:distance") instanceof Integer distance ? distance : 0;
-            BarOverlayRenderer.renderHealthLevelBars(guiGraphics, this.screenWidth, this.screenHeight, this.minecraft, leftHeight + raisedHeight, OverflowingBars.CONFIG.get(ClientConfig.class).health.allowCount);
+            BarOverlayRenderer.renderHealthLevelBars(this.minecraft, guiGraphics, 39, OverflowingBars.CONFIG.get(ClientConfig.class).health.allowCount);
             BarOverlayRenderer.resetRenderState();
             callback.cancel();
         }
@@ -58,16 +55,16 @@ abstract class GuiFabricMixin {
         ClientConfig.ArmorRowConfig armorConfig = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
         if (armorConfig.allowLayers || OverflowingBars.CONFIG.get(ClientConfig.class).health.allowLayers) {
             armorValue = 0;
-            BarOverlayRenderer.renderArmorLevelBar(guiGraphics, this.screenWidth, this.screenHeight, this.minecraft, leftHeight + raisedHeight, armorConfig.allowCount, !armorConfig.allowLayers);
+            BarOverlayRenderer.renderArmorLevelBar(this.minecraft, guiGraphics, leftHeight + raisedHeight, armorConfig.allowCount, !armorConfig.allowLayers);
             BarOverlayRenderer.resetRenderState();
         }
         if (player.getArmorValue() > 0) leftHeight += 10;
         ClientConfig.ToughnessRowConfig toughnessConfig = OverflowingBars.CONFIG.get(ClientConfig.class).toughness;
         if (!toughnessConfig.armorToughnessBar || !toughnessConfig.leftSide) return armorValue;
-        BarOverlayRenderer.renderToughnessLevelBar(guiGraphics, this.screenWidth, this.screenHeight, this.minecraft, leftHeight + raisedHeight, toughnessConfig.allowCount, true, !toughnessConfig.allowLayers);
+        BarOverlayRenderer.renderToughnessLevelBar(this.minecraft, guiGraphics, leftHeight + raisedHeight, toughnessConfig.allowCount, true, !toughnessConfig.allowLayers);
         BarOverlayRenderer.resetRenderState();
         if (Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS)) > 0) leftHeight += 10;
-        FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_LEFT_HEIGHT_KEY, new MutableInt(leftHeight));
+//        FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_LEFT_HEIGHT_KEY, new MutableInt(leftHeight));
         return armorValue;
     }
 
@@ -80,7 +77,8 @@ abstract class GuiFabricMixin {
         int rightHeight = leaveMyBarsAloneHeight.map(MutableInt::intValue).orElseGet(() -> 39 + this.overflowingBars$getAdditionalRightHeight(player));
         if (config.armorToughnessBar && !config.leftSide) {
             final int raisedHeight = FabricLoader.getInstance().getObjectShare().get("raised:distance") instanceof Integer distance ? distance : 0;
-            BarOverlayRenderer.renderToughnessLevelBar(guiGraphics, this.screenWidth, this.screenHeight, this.minecraft, rightHeight + config.toughnessBarRowShift * 10 + raisedHeight, config.allowCount, false, !config.allowLayers);
+            BarOverlayRenderer.renderToughnessLevelBar(this.minecraft, guiGraphics,
+                    rightHeight + config.toughnessBarRowShift * 10 + raisedHeight, config.allowCount, false, !config.allowLayers);
             BarOverlayRenderer.resetRenderState();
             if (Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS)) > 0) {
                 int toughnessHeight = 10 + config.toughnessBarRowShift * 10;
@@ -88,7 +86,7 @@ abstract class GuiFabricMixin {
                 leaveMyBarsAloneHeight.ifPresent(mutableInt -> mutableInt.add(toughnessHeight));
             }
         }
-        FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_RIGHT_HEIGHT_KEY, new MutableInt(rightHeight));
+//        FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_RIGHT_HEIGHT_KEY, new MutableInt(rightHeight));
     }
 
     @Unique
@@ -122,21 +120,21 @@ abstract class GuiFabricMixin {
 
     @Shadow
     private Player getCameraPlayer() {
-        throw new IllegalStateException();
+        throw new RuntimeException();
     }
 
     @Shadow
     private LivingEntity getPlayerVehicleWithHealth() {
-        throw new IllegalStateException();
+        throw new RuntimeException();
     }
 
     @Shadow
     private int getVehicleMaxHearts(LivingEntity mountEntity) {
-        throw new IllegalStateException();
+        throw new RuntimeException();
     }
 
     @Shadow
     private int getVisibleVehicleHeartRows(int mountHealth) {
-        throw new IllegalStateException();
+        throw new RuntimeException();
     }
 }
