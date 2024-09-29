@@ -13,7 +13,7 @@ public class ArmorBarRenderer {
 
     public static void renderArmorBar(GuiGraphics guiGraphics, int posX, int posY, Player player, ProfilerFiller profiler, boolean unmodified) {
         profiler.push("armor");
-        ClientConfig.ArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
+        ClientConfig.AbstractArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
         int armorPoints = player.getArmorValue();
         renderArmorBar(guiGraphics, posX, posY, 18, armorPoints, true, unmodified, config);
         profiler.pop();
@@ -27,7 +27,7 @@ public class ArmorBarRenderer {
         profiler.pop();
     }
 
-    public static void renderArmorBar(GuiGraphics guiGraphics, int posX, int posY, int vOffset, int armorPoints, boolean left, boolean unmodified, ClientConfig.ArmorRowConfig config) {
+    public static void renderArmorBar(GuiGraphics guiGraphics, int posX, int posY, int vOffset, int armorPoints, boolean left, boolean unmodified, ClientConfig.AbstractArmorRowConfig config) {
         if (armorPoints <= 0) return;
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.defaultBlendFunc();

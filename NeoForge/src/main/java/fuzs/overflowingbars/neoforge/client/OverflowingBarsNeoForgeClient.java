@@ -3,7 +3,6 @@ package fuzs.overflowingbars.neoforge.client;
 import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.client.OverflowingBarsClient;
 import fuzs.overflowingbars.client.handler.GuiLayerHandler;
-import fuzs.overflowingbars.neoforge.client.handler.HoveringHotbarHandler;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
@@ -12,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -27,7 +25,6 @@ public class OverflowingBarsNeoForgeClient {
     public OverflowingBarsNeoForgeClient(ModContainer modContainer) {
         ClientModConstructor.construct(OverflowingBars.MOD_ID, OverflowingBarsClient::new);
         registerLoadingHandlers(modContainer.getEventBus());
-        registerEventHandlers(NeoForge.EVENT_BUS);
         registerModIntegrations();
     }
 
@@ -39,13 +36,6 @@ public class OverflowingBarsNeoForgeClient {
                     }
             );
         });
-    }
-
-    private static void registerEventHandlers(IEventBus eventBus) {
-        // try to not push a pose on the stack when the event is cancelled
-        eventBus.addListener(EventPriority.LOW, HoveringHotbarHandler::onBeforeRenderGui);
-        eventBus.addListener(HoveringHotbarHandler::onAfterRenderGui);
-        eventBus.addListener(HoveringHotbarHandler::onBeforeRenderGuiLayer);
     }
 
     private static void registerModIntegrations() {

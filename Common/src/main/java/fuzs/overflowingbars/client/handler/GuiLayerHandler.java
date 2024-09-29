@@ -31,7 +31,7 @@ public class GuiLayerHandler {
     }
 
     public static EventResult onRenderArmorLevel(Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        ClientConfig.ArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
+        ClientConfig.AbstractArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
         if (minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() && config.allowLayers) {
             RenderSystem.enableBlend();
             int guiLeftHeight = ClientAbstractions.INSTANCE.getGuiLeftHeight(minecraft.gui) + config.manualRowShift();
@@ -76,7 +76,7 @@ public class GuiLayerHandler {
     }
 
     public static void onRenderChatPanel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
-        if (!OverflowingBars.CONFIG.get(ClientConfig.class).moveChatAboveArmor) return;
+        if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) return;
         posY.mapInt(value -> value - ChatOffsetHelper.getChatOffsetY());
     }
 }
