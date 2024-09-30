@@ -17,7 +17,7 @@ public class GuiLayerHandler {
 
     public static EventResult onRenderPlayerHealth(Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         ClientConfig.IconRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).health;
-        if (minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() && config.allowLayers) {
+        if (!minecraft.options.hideGui && minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() && config.allowLayers) {
             int guiLeftHeight = ClientAbstractions.INSTANCE.getGuiLeftHeight(minecraft.gui) + config.manualRowShift();
             BarOverlayRenderer.renderHealthLevelBars(minecraft, guiGraphics, guiLeftHeight, config.allowCount);
             BarOverlayRenderer.resetRenderState();
@@ -32,7 +32,7 @@ public class GuiLayerHandler {
 
     public static EventResult onRenderArmorLevel(Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         ClientConfig.AbstractArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
-        if (minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() && config.allowLayers) {
+        if (!minecraft.options.hideGui && minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() && config.allowLayers) {
             RenderSystem.enableBlend();
             int guiLeftHeight = ClientAbstractions.INSTANCE.getGuiLeftHeight(minecraft.gui) + config.manualRowShift();
             BarOverlayRenderer.renderArmorLevelBar(minecraft, guiGraphics, guiLeftHeight, config.allowCount, false);
@@ -49,7 +49,7 @@ public class GuiLayerHandler {
 
     public static EventResult onRenderToughnessLevel(Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         ClientConfig.ToughnessRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).toughness;
-        if (minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() &&
+        if (!minecraft.options.hideGui && minecraft.getCameraEntity() instanceof Player && minecraft.gameMode.canHurtPlayer() &&
                 config.armorToughnessBar) {
             RenderSystem.enableBlend();
             int guiHeight;
