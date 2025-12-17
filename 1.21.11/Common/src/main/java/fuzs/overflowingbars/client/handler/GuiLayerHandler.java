@@ -10,14 +10,14 @@ import fuzs.puzzleslib.api.event.v1.data.MutableInt;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class GuiLayerHandler {
-    public static final ResourceLocation TOUGHNESS_LEVEL_LEFT_LOCATION = OverflowingBars.id("toughness_level/left");
-    public static final ResourceLocation TOUGHNESS_LEVEL_RIGHT_LOCATION = OverflowingBars.id("toughness_level/right");
-    public static final ResourceLocation TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION = OverflowingBars.id(
+    public static final Identifier TOUGHNESS_LEVEL_LEFT_LOCATION = OverflowingBars.id("toughness_level/left");
+    public static final Identifier TOUGHNESS_LEVEL_RIGHT_LOCATION = OverflowingBars.id("toughness_level/right");
+    public static final Identifier TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION = OverflowingBars.id(
             "toughness_level/right/mounted");
 
     public static void onRenderPlayerHealth(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
@@ -40,7 +40,7 @@ public class GuiLayerHandler {
         }
     }
 
-    public static void onRenderToughnessLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, ResourceLocation heightProviderLocation, boolean leftSide) {
+    public static void onRenderToughnessLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, Identifier heightProviderLocation, boolean leftSide) {
         ClientConfig.ToughnessRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).toughness;
         Player player = getCameraPlayer();
         if (config.leftSide == leftSide && config.armorToughnessBar && player != null) {
@@ -72,6 +72,6 @@ public class GuiLayerHandler {
 
     public static void onRenderChatPanel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
         if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) return;
-        posY.mapInt(value -> value - ChatOffsetHelper.getChatOffsetY());
+        posY.mapAsInt((int value) -> value - ChatOffsetHelper.getChatOffsetY());
     }
 }

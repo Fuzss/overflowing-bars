@@ -1,0 +1,61 @@
+{
+    "mod": {
+        "id": "overflowingbars",
+        "group": "fuzs.overflowingbars",
+        "name": "Overflowing Bars",
+        "version": "21.11.0",
+        "authors": [
+            "Fuzs"
+        ],
+        "description": "Expand health, armor and armor toughness bars beyond vanilla. Nice and compact without confusing colors.",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "overflowingbars"
+        },
+        {
+            "name": "curseforge",
+            "slug": "overflowing-bars",
+            "id": "852662"
+        },
+        {
+            "name": "modrinth",
+            "slug": "overflowing-bars",
+            "id": "XD7XOrAF"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "unsupported"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

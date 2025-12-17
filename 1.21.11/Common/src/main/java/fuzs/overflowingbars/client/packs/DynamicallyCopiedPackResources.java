@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.atlas.SpriteSource;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.VanillaPackResources;
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -17,7 +17,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 public class DynamicallyCopiedPackResources extends AbstractModPackResources {
     private final ResourceManager resourceManager;
     private final VanillaPackResources vanillaPackResources;
-    private final Map<ResourceLocation, TextureCopy> textures;
+    private final Map<Identifier, TextureCopy> textures;
 
     protected DynamicallyCopiedPackResources(TextureCopy... textures) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -57,9 +57,9 @@ public class DynamicallyCopiedPackResources extends AbstractModPackResources {
 
     @Nullable
     @Override
-    public IoSupplier<InputStream> getResource(PackType packType, ResourceLocation resourceLocation) {
-        if (this.textures.containsKey(resourceLocation)) {
-            TextureCopy textureCopy = this.textures.get(resourceLocation);
+    public IoSupplier<InputStream> getResource(PackType packType, Identifier identifier) {
+        if (this.textures.containsKey(identifier)) {
+            TextureCopy textureCopy = this.textures.get(identifier);
             Optional<Resource> vanillaResource = this.resourceManager.getResource(textureCopy.vanillaLocation());
             if (vanillaResource.isPresent()) {
                 try (NativeImage nativeImage = NativeImage.read(vanillaResource.get().open())) {
@@ -82,7 +82,7 @@ public class DynamicallyCopiedPackResources extends AbstractModPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType packType) {
-//        return this.textures.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet());
+//        return this.textures.keySet().stream().map(Identifier::getNamespace).collect(Collectors.toSet());
         return Collections.singleton(OverflowingBars.MOD_ID);
     }
 
@@ -98,14 +98,14 @@ public class DynamicallyCopiedPackResources extends AbstractModPackResources {
 
                 Stream.of(Gui.HeartType.values())
                         .flatMap(NewHealthBarRenderer::getHeartTypeTextureLocations)
-                        .forEach(resourceLocation -> {
-                            ResourceLocation resourceLocation1 = OverflowingBars.id(resourceLocation.getPath())
+                        .forEach(identifier -> {
+                            Identifier resourceLocation1 = OverflowingBars.id(identifier.getPath())
                                     .withSuffix("_" + dye);
-                            ResourceLocation resourceLocation2 = resourceLocation.withPrefix(prefix + "/")
+                            Identifier resourceLocation2 = identifier.withPrefix(prefix + "/")
                                     .withSuffix(".png");
                             Optional<Resource> resource = this.resourceManager.getResource(resourceLocation2);
                             if (resource.isPresent()) {
-                                ResourceLocation resourceLocation3 = resourceLocation1.withPrefix(prefix + "/")
+                                Identifier resourceLocation3 = resourceLocation1.withPrefix(prefix + "/")
                                         .withSuffix(".png");
                                 resourceOutput.accept(resourceLocation3, () -> makeImageTranslucent(resource.get()::open, dye));
                             }
@@ -224,8 +224,8 @@ public class DynamicallyCopiedPackResources extends AbstractModPackResources {
         }
     }
 
-    public record TextureCopy(ResourceLocation vanillaLocation,
-                              ResourceLocation destinationLocation,
+    public record TextureCopy(Identifier vanillaLocation,
+                              Identifier destinationLocation,
                               int vanillaImageWidth,
                               int vanillaImageHeight) {
 

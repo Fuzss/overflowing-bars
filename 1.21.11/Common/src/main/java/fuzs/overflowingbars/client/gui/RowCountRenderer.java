@@ -8,14 +8,14 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
 import java.util.stream.IntStream;
 
 public class RowCountRenderer {
-    private static final ResourceLocation TINY_NUMBERS_LOCATION = OverflowingBars.id("textures/font/tiny_numbers.png");
+    private static final Identifier TINY_NUMBERS_LOCATION = OverflowingBars.id("textures/font/tiny_numbers.png");
 
     public static void drawBarRowCount(GuiGraphics guiGraphics, int posX, int posY, int barValue, boolean left) {
         drawBarRowCount(guiGraphics, posX, posY, barValue, left, 20);

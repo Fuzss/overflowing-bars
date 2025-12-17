@@ -2,19 +2,19 @@ package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.config.ClientConfig;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class HealthBarRenderer {
     public static final HealthBarRenderer INSTANCE = new HealthBarRenderer();
@@ -150,12 +150,11 @@ public class HealthBarRenderer {
         FROZEN(Gui.HeartType.FROZEN),
         ORANGE(0, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
 
-        @Nullable
-        private final Gui.HeartType heartType;
+        private final Gui.@Nullable HeartType heartType;
         private final int textureIndexX;
         private final int textureIndexY;
         private final int hardcoreIndexY;
-        private final ResourceLocation textureSheet;
+        private final Identifier textureSheet;
         private final boolean canBlink;
 
         ModHeartType(Gui.HeartType heartType) {
@@ -167,7 +166,7 @@ public class HealthBarRenderer {
             this.canBlink = false;
         }
 
-        ModHeartType(int textureIndexX, int textureIndexY, int hardcoreIndexY, ResourceLocation textureSheet, boolean blink) {
+        ModHeartType(int textureIndexX, int textureIndexY, int hardcoreIndexY, Identifier textureSheet, boolean blink) {
             this.heartType = null;
             this.textureIndexX = textureIndexX;
             this.textureIndexY = textureIndexY;
@@ -178,8 +177,8 @@ public class HealthBarRenderer {
 
         public void renderHeart(GuiGraphics guiGraphics, int posX, int posY, boolean blinking, boolean halfHeart, boolean hardcore) {
             if (this.heartType != null) {
-                ResourceLocation resourceLocation = this.heartType.getSprite(hardcore, halfHeart, blinking);
-                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, resourceLocation, posX, posY, 9, 9);
+                Identifier identifier = this.heartType.getSprite(hardcore, halfHeart, blinking);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, posX, posY, 9, 9);
             } else {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                         this.textureSheet,

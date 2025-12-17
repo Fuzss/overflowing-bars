@@ -5,4 +5,5 @@ plugins {
 dependencies {
     modCompileOnly(libs.puzzleslib.common)
     modApi(libs.puzzleslib.neoforge)
+    modLocalRuntime(libs.appleskin.neoforge)
 }
