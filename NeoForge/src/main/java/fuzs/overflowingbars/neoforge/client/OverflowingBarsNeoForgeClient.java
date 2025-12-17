@@ -4,8 +4,8 @@ import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.client.OverflowingBarsClient;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -23,9 +23,9 @@ public class OverflowingBarsNeoForgeClient {
     private static void registerModIntegrations() {
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("appleskin")) {
             // just disable this, it's not too useful anyway and would be annoying to get to work properly with the stacked rendering
-            ResourceLocation resourceLocation = ResourceLocationHelper.parse("appleskin:health_restored");
+            Identifier identifier = Identifier.parse("appleskin:health_restored");
             NeoForge.EVENT_BUS.addListener((final RenderGuiLayerEvent.Pre evt) -> {
-                if (evt.getName().equals(resourceLocation)) {
+                if (evt.getName().equals(identifier)) {
                     evt.setCanceled(true);
                 }
             });

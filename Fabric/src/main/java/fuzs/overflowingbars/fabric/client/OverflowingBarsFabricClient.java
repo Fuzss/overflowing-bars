@@ -19,7 +19,9 @@ public class OverflowingBarsFabricClient implements ClientModInitializer {
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("appleskin")) {
             try {
                 // just disable this, it's not too useful anyway and would be annoying to get to work properly with the stacked rendering
-                HUDOverlayEvent.HealthRestored.EVENT.register(healthRestored -> healthRestored.isCanceled = true);
+                HUDOverlayEvent.HealthRestored.EVENT.register((HUDOverlayEvent.HealthRestored healthRestored) -> {
+                    healthRestored.isCanceled = true;
+                });
             } catch (Throwable throwable) {
                 OverflowingBars.LOGGER.warn("Failed to initialize Apple Skin integration!", throwable);
             }

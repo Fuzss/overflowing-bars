@@ -2,22 +2,22 @@ package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.stream.Stream;
 
 public class NewHealthBarRenderer {
 
-    public static Stream<ResourceLocation> getAllTextureLocations() {
+    public static Stream<Identifier> getAllTextureLocations() {
         return Stream.of(Gui.HeartType.values())
                 .filter(heartType -> heartType != Gui.HeartType.CONTAINER)
                 .flatMap(NewHealthBarRenderer::getHeartTypeTextureLocations)
-                .map(ResourceLocation::getPath)
+                .map(Identifier::getPath)
                 .map(OverflowingBars::id);
     }
 
-    public static Stream<ResourceLocation> getHeartTypeTextureLocations(Gui.HeartType heartType) {
-        Stream.Builder<ResourceLocation> builder = Stream.builder();
+    public static Stream<Identifier> getHeartTypeTextureLocations(Gui.HeartType heartType) {
+        Stream.Builder<Identifier> builder = Stream.builder();
         builder.add(heartType.full).add(heartType.fullBlinking).add(heartType.half).add(heartType.halfBlinking);
         builder.add(heartType.hardcoreFull)
                 .add(heartType.hardcoreFullBlinking)
