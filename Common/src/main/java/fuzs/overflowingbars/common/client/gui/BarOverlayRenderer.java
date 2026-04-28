@@ -1,6 +1,6 @@
-package fuzs.overflowingbars.client.gui;
+package fuzs.overflowingbars.common.client.gui;
 
-import fuzs.overflowingbars.OverflowingBars;
+import fuzs.overflowingbars.common.OverflowingBars;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;

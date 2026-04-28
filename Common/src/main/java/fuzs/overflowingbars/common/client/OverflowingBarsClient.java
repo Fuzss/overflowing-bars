@@ -1,10 +1,10 @@
-package fuzs.overflowingbars.client;
+package fuzs.overflowingbars.common.client;
 
-import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.client.gui.HealthBarRenderer;
-import fuzs.overflowingbars.client.handler.GuiLayerHandler;
-import fuzs.overflowingbars.client.helper.ChatOffsetHelper;
-import fuzs.overflowingbars.config.ClientConfig;
+import fuzs.overflowingbars.common.OverflowingBars;
+import fuzs.overflowingbars.common.client.gui.HealthBarRenderer;
+import fuzs.overflowingbars.common.client.handler.GuiLayerHandler;
+import fuzs.overflowingbars.common.client.helper.ChatOffsetHelper;
+import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;

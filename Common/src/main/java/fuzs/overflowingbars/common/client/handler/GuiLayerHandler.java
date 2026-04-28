@@ -1,9 +1,9 @@
-package fuzs.overflowingbars.client.handler;
+package fuzs.overflowingbars.common.client.handler;
 
-import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.client.gui.BarOverlayRenderer;
-import fuzs.overflowingbars.client.helper.ChatOffsetHelper;
-import fuzs.overflowingbars.config.ClientConfig;
+import fuzs.overflowingbars.common.OverflowingBars;
+import fuzs.overflowingbars.common.client.gui.BarOverlayRenderer;
+import fuzs.overflowingbars.common.client.helper.ChatOffsetHelper;
+import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.gui.v2.ScreenHelper;
 import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;

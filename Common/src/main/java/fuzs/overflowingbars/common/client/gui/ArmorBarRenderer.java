@@ -1,7 +1,7 @@
-package fuzs.overflowingbars.client.gui;
+package fuzs.overflowingbars.common.client.gui;
 
-import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.config.ClientConfig;
+import fuzs.overflowingbars.common.OverflowingBars;
+import fuzs.overflowingbars.common.config.ClientConfig;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.Mth;

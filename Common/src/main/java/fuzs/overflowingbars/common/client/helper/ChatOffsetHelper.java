@@ -1,7 +1,7 @@
-package fuzs.overflowingbars.client.helper;
+package fuzs.overflowingbars.common.client.helper;
 
-import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.config.ClientConfig;
+import fuzs.overflowingbars.common.OverflowingBars;
+import fuzs.overflowingbars.common.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;

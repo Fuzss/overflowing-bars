@@ -1,6 +1,6 @@
 package fuzs.overflowingbars.neoforge;
 
-import fuzs.overflowingbars.OverflowingBars;
+import fuzs.overflowingbars.common.OverflowingBars;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import net.neoforged.fml.common.Mod;
 

@@ -1,10 +1,9 @@
 package fuzs.overflowingbars.neoforge.client;
 
-import fuzs.overflowingbars.OverflowingBars;
-import fuzs.overflowingbars.client.OverflowingBarsClient;
+import fuzs.overflowingbars.common.OverflowingBars;
+import fuzs.overflowingbars.common.client.OverflowingBarsClient;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;

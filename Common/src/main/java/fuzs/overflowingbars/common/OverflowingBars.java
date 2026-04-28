@@ -1,6 +1,6 @@
-package fuzs.overflowingbars;
+package fuzs.overflowingbars.common;
 
-import fuzs.overflowingbars.config.ClientConfig;
+import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
