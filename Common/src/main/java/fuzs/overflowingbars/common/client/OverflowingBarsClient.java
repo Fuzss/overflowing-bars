@@ -4,6 +4,7 @@ import fuzs.overflowingbars.common.OverflowingBars;
 import fuzs.overflowingbars.common.client.gui.HealthBarRenderer;
 import fuzs.overflowingbars.common.client.handler.GuiLayerHandler;
 import fuzs.overflowingbars.common.client.helper.ChatOffsetHelper;
+import fuzs.overflowingbars.common.client.init.ModEnumConstants;
 import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
@@ -19,6 +20,7 @@ public class OverflowingBarsClient implements ClientModConstructor {
 
     @Override
     public void onConstructMod() {
+        ModEnumConstants.bootstrap();
         registerEventHandlers();
     }
 

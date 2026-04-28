@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/client/gui/Gui$HeartType",
+      "name": "OVERFLOWINGBARS_LAYER",
+      "constructor": "(Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;)V",
+      "parameters": {
+        "class": "fuzs/overflowingbars/neoforge/client/init/NeoForgeModEnumConstants",
+        "field": "LAYER_HEART_TYPE"
+      }
+    }
+  ]
+}

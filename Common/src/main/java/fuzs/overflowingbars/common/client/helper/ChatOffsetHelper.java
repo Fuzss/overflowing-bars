@@ -10,15 +10,22 @@ import net.minecraft.world.entity.player.Player;
 public class ChatOffsetHelper {
 
     public static int getChatOffsetY() {
+        Player player = Minecraft.getInstance().player;
         int offset = 0;
-        Minecraft minecraft = Minecraft.getInstance();
-        if (twoHealthRows(minecraft.player)) offset++;
-        if (armorRow(minecraft.player)) offset++;
-        if (toughnessRow(minecraft.player)) {
+        if (twoHealthRows(player)) {
+            offset++;
+        }
+
+        if (armorRow(player)) {
+            offset++;
+        }
+
+        if (toughnessRow(player)) {
             if (OverflowingBars.CONFIG.get(ClientConfig.class).toughness.leftSide || offset == 0) {
                 offset++;
             }
         }
+
         return offset * 10;
     }
 
@@ -31,6 +38,7 @@ public class ChatOffsetHelper {
     }
 
     public static boolean toughnessRow(Player player) {
-        return OverflowingBars.CONFIG.get(ClientConfig.class).toughness.armorToughnessBar && Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS)) > 0;
+        return OverflowingBars.CONFIG.get(ClientConfig.class).toughness.armorToughnessBar
+                && Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS)) > 0;
     }
 }

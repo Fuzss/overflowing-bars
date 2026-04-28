@@ -22,7 +22,10 @@ public class RowCountRenderer {
     }
 
     public static void drawBarRowCount(GuiGraphicsExtractor guiGraphics, int posX, int posY, int barValue, boolean left, int maxRowCount) {
-        if (barValue <= 0 || maxRowCount <= 0) return;
+        if (barValue <= 0 || maxRowCount <= 0) {
+            return;
+        }
+
         float rowCount = barValue / (float) maxRowCount;
         ClientConfig config = OverflowingBars.CONFIG.get(ClientConfig.class);
         if (!config.rowCount.alwaysRenderRowCount && rowCount <= 1.0F) return;
@@ -32,18 +35,21 @@ public class RowCountRenderer {
         } else {
             numberValue = Mth.ceil(rowCount);
         }
-        int textColor = ARGB.opaque(config.rowCount.rowCountColor.getColor());
+
+        int textColor = ARGB.opaque(config.rowCount.rowCountColor.getTextureDiffuseColor());
         if (config.rowCount.forceFontRenderer) {
             Font font = Minecraft.getInstance().font;
             String text = String.valueOf(numberValue);
             if (config.rowCount.rowCountX) {
                 text += "x";
             }
+
             if (left) {
                 posX -= font.width(text);
             } else {
                 posX += 5;
             }
+
             GuiGraphicsHelper.drawInBatch8xOutline(guiGraphics,
                     font,
                     Component.literal(text),

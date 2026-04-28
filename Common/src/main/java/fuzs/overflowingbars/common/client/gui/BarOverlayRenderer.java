@@ -36,11 +36,11 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderToughnessLevelBar(GuiGraphicsExtractor guiGraphics, Player player, int guiHeight, boolean rowCount, boolean leftSide, boolean vanillaLike) {
+    public static void renderToughnessLevelBar(GuiGraphicsExtractor guiGraphics, Player player, int guiHeight, boolean rowCount, boolean leftSide, boolean matchVanilla) {
         int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91);
         int posY = guiGraphics.guiHeight() - guiHeight;
-        ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, leftSide, vanillaLike);
-        if (rowCount && !vanillaLike) {
+        ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, leftSide, matchVanilla);
+        if (rowCount && !matchVanilla) {
             int toughnessValue = Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
             RowCountRenderer.drawBarRowCount(guiGraphics, posX - 2, posY, toughnessValue, leftSide);
         }

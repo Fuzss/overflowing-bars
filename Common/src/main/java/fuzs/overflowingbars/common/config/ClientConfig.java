@@ -2,13 +2,13 @@ package fuzs.overflowingbars.common.config;
 
 import fuzs.puzzleslib.common.api.config.v3.Config;
 import fuzs.puzzleslib.common.api.config.v3.ConfigCore;
-import net.minecraft.ChatFormatting;
+import net.minecraft.world.item.DyeColor;
 
 public class ClientConfig implements ConfigCore {
     /**
      * Corresponding options are separate as not all require a game restart.
      */
-    static final String ALLOW_LAYERS_DESCRIPTION = "Add layers to this bar. When disabled any modifications to the bar from this mod will be turned off.";
+    private static final String ALLOW_LAYERS_DESCRIPTION = "Add layers to this bar. When disabled any modifications to the bar from this mod will be turned off.";
 
     @Config
     public HealthRowConfig health = new HealthRowConfig();
@@ -36,9 +36,7 @@ public class ClientConfig implements ConfigCore {
     }
 
     public static class HealthRowConfig extends IconRowConfig {
-        @Config(
-                description = ALLOW_LAYERS_DESCRIPTION, gameRestart = true
-        )
+        @Config(description = ALLOW_LAYERS_DESCRIPTION, gameRestart = true)
         public boolean allowHealthLayers = true;
     }
 
@@ -48,25 +46,19 @@ public class ClientConfig implements ConfigCore {
     }
 
     public static class ArmorRowConfig extends AbstractArmorRowConfig {
-        @Config(
-                description = ALLOW_LAYERS_DESCRIPTION, gameRestart = true
-        )
+        @Config(description = ALLOW_LAYERS_DESCRIPTION, gameRestart = true)
         public boolean allowArmorLayers = true;
         @Config(description = "Move chat messages above armor / absorption bar.")
         public boolean moveChatAboveArmor = true;
     }
 
     public static class ToughnessRowConfig extends AbstractArmorRowConfig {
-        @Config(
-                description = ALLOW_LAYERS_DESCRIPTION
-        )
+        @Config(description = ALLOW_LAYERS_DESCRIPTION)
         public boolean allowToughnessLayers = true;
-        @Config(
-                description = {
-                        "Render a separate armor bar for the armor toughness attribute (from diamond and netherite armor).",
-                        "Having only this option active will make the toughness bar behave just like vanilla's armor bar without any colorful stacking or so."
-                }
-        )
+        @Config(description = {
+                "Render a separate armor bar for the armor toughness attribute (from diamond and netherite armor).",
+                "Having only this option active will make the toughness bar behave just like vanilla's armor bar without any colorful stacking or so."
+        })
         public boolean armorToughnessBar = true;
         @Config(description = "Render the toughness bar on the left side above the hotbar (where health and armor is rendered).")
         public boolean leftSide = false;
@@ -74,27 +66,7 @@ public class ClientConfig implements ConfigCore {
 
     public static class RowCountConfig implements ConfigCore {
         @Config(description = "Color of row count, use any chat formatting color value.")
-        @Config.AllowedValues(
-                values = {
-                        "BLACK",
-                        "DARK_BLUE",
-                        "DARK_GREEN",
-                        "DARK_AQUA",
-                        "DARK_RED",
-                        "DARK_PURPLE",
-                        "GOLD",
-                        "GRAY",
-                        "DARK_GRAY",
-                        "BLUE",
-                        "GREEN",
-                        "AQUA",
-                        "RED",
-                        "LIGHT_PURPLE",
-                        "YELLOW",
-                        "WHITE"
-                }
-        )
-        public ChatFormatting rowCountColor = ChatFormatting.WHITE;
+        public DyeColor rowCountColor = DyeColor.WHITE;
         @Config(description = "Force drawing row count using the font renderer, will make numbers display larger.")
         public boolean forceFontRenderer = false;
         @Config(description = "Only include completely filled rows for the row count.")

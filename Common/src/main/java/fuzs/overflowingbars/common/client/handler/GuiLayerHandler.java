@@ -50,6 +50,7 @@ public class GuiLayerHandler {
             } else {
                 guiHeight = ScreenHelper.getRightStatusBarHeight(heightProviderLocation);
             }
+
             guiHeight += config.manualRowShift();
             BarOverlayRenderer.renderToughnessLevelBar(guiGraphics,
                     player,
@@ -71,7 +72,10 @@ public class GuiLayerHandler {
     }
 
     public static void onRenderChatPanel(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
-        if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) return;
+        if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) {
+            return;
+        }
+
         posY.mapAsInt((int value) -> value - ChatOffsetHelper.getChatOffsetY());
     }
 }
