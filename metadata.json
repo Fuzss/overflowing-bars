@@ -1,9 +1,10 @@
 {
+    "minecraft": "26.1.2",
     "mod": {
         "id": "overflowingbars",
         "group": "fuzs.overflowingbars",
         "name": "Overflowing Bars",
-        "version": "21.11.0",
+        "version": "26.1.0",
         "authors": [
             "Fuzs"
         ],
@@ -36,13 +37,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "overflowingbars"
-        },
-        {
             "name": "curseforge",
             "slug": "overflowing-bars",
             "id": "852662"
+        },
+        {
+            "name": "github",
+            "slug": "overflowing-bars"
         },
         {
             "name": "modrinth",

@@ -2,7 +2,7 @@ package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.config.ClientConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.Mth;
 import net.minecraft.util.profiling.Profiler;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class ArmorBarRenderer {
 
-    public static void renderArmorBar(GuiGraphics guiGraphics, int posX, int posY, Player player) {
+    public static void renderArmorBar(GuiGraphicsExtractor guiGraphics, int posX, int posY, Player player) {
         Profiler.get().push(OverflowingBars.id("armor").toString());
         ClientConfig.AbstractArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
         int armorPoints = player.getArmorValue();
@@ -19,7 +19,7 @@ public class ArmorBarRenderer {
         Profiler.get().pop();
     }
 
-    public static void renderToughnessBar(GuiGraphics guiGraphics, int posX, int posY, Player player, boolean left, boolean vanillaLike) {
+    public static void renderToughnessBar(GuiGraphicsExtractor guiGraphics, int posX, int posY, Player player, boolean left, boolean vanillaLike) {
         Profiler.get().push(OverflowingBars.id("toughness").toString());
         ClientConfig.ToughnessRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).toughness;
         int armorPoints = Mth.floor(player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
@@ -27,7 +27,7 @@ public class ArmorBarRenderer {
         Profiler.get().pop();
     }
 
-    public static void renderArmorBar(GuiGraphics guiGraphics, int posX, int posY, int vOffset, int armorPoints, boolean left, boolean vanillaLike, ClientConfig.AbstractArmorRowConfig config) {
+    public static void renderArmorBar(GuiGraphicsExtractor guiGraphics, int posX, int posY, int vOffset, int armorPoints, boolean left, boolean vanillaLike, ClientConfig.AbstractArmorRowConfig config) {
         if (armorPoints <= 0) return;
         boolean inverse = !vanillaLike && config.inverseColoring;
         boolean skip = !vanillaLike && config.skipEmptyArmorPoints;

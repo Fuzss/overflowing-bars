@@ -5,14 +5,14 @@ import fuzs.overflowingbars.client.gui.HealthBarRenderer;
 import fuzs.overflowingbars.client.handler.GuiLayerHandler;
 import fuzs.overflowingbars.client.helper.ChatOffsetHelper;
 import fuzs.overflowingbars.config.ClientConfig;
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
-import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
-import fuzs.puzzleslib.api.client.event.v1.gui.CustomizeChatPanelCallback;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
+import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;
+import fuzs.puzzleslib.common.api.client.event.v1.gui.CustomizeChatPanelCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.entity.player.Player;
 
 public class OverflowingBarsClient implements ClientModConstructor {
@@ -52,7 +52,7 @@ public class OverflowingBarsClient implements ClientModConstructor {
         }
         context.registerGuiLayer(GuiLayersContext.ARMOR_LEVEL,
                 GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_LOCATION,
-                (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+                (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
                     GuiLayerHandler.onRenderToughnessLevel(guiGraphics,
                             deltaTracker,
                             GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_LOCATION,
@@ -60,7 +60,7 @@ public class OverflowingBarsClient implements ClientModConstructor {
                 });
         context.registerGuiLayer(GuiLayersContext.FOOD_LEVEL,
                 GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_LOCATION,
-                (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+                (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
                     Gui gui = Minecraft.getInstance().gui;
                     int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
                     if (vehicleMaxHearts == 0) {
@@ -72,7 +72,7 @@ public class OverflowingBarsClient implements ClientModConstructor {
                 });
         context.registerGuiLayer(GuiLayersContext.VEHICLE_HEALTH,
                 GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION,
-                (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+                (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
                     Gui gui = Minecraft.getInstance().gui;
                     int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
                     if (vehicleMaxHearts != 0) {

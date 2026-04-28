@@ -2,10 +2,10 @@ package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.config.ClientConfig;
-import fuzs.puzzleslib.api.client.gui.v2.GuiGraphicsHelper;
+import fuzs.puzzleslib.common.api.client.gui.v2.GuiGraphicsHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -17,11 +17,11 @@ import java.util.stream.IntStream;
 public class RowCountRenderer {
     private static final Identifier TINY_NUMBERS_LOCATION = OverflowingBars.id("textures/font/tiny_numbers.png");
 
-    public static void drawBarRowCount(GuiGraphics guiGraphics, int posX, int posY, int barValue, boolean left) {
+    public static void drawBarRowCount(GuiGraphicsExtractor guiGraphics, int posX, int posY, int barValue, boolean left) {
         drawBarRowCount(guiGraphics, posX, posY, barValue, left, 20);
     }
 
-    public static void drawBarRowCount(GuiGraphics guiGraphics, int posX, int posY, int barValue, boolean left, int maxRowCount) {
+    public static void drawBarRowCount(GuiGraphicsExtractor guiGraphics, int posX, int posY, int barValue, boolean left, int maxRowCount) {
         if (barValue <= 0 || maxRowCount <= 0) return;
         float rowCount = barValue / (float) maxRowCount;
         ClientConfig config = OverflowingBars.CONFIG.get(ClientConfig.class);
@@ -68,7 +68,7 @@ public class RowCountRenderer {
         }
     }
 
-    private static void drawBorderedSprite(GuiGraphics guiGraphics, int width, int height, int posX, int posY, int textureX, int textureY, int textColor) {
+    private static void drawBorderedSprite(GuiGraphicsExtractor guiGraphics, int width, int height, int posX, int posY, int textureX, int textureY, int textColor) {
         // drop shadow on all sides
         int backgroundColor = ARGB.opaque(0);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,

@@ -4,12 +4,12 @@ import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.client.gui.BarOverlayRenderer;
 import fuzs.overflowingbars.client.helper.ChatOffsetHelper;
 import fuzs.overflowingbars.config.ClientConfig;
-import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
-import fuzs.puzzleslib.api.client.gui.v2.ScreenHelper;
-import fuzs.puzzleslib.api.event.v1.data.MutableInt;
+import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
+import fuzs.puzzleslib.common.api.client.gui.v2.ScreenHelper;
+import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import org.jspecify.annotations.Nullable;
@@ -20,7 +20,7 @@ public class GuiLayerHandler {
     public static final Identifier TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION = OverflowingBars.id(
             "toughness_level/right/mounted");
 
-    public static void onRenderPlayerHealth(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static void onRenderPlayerHealth(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Player player = getCameraPlayer();
         if (player != null) {
             ClientConfig.IconRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).health;
@@ -30,7 +30,7 @@ public class GuiLayerHandler {
         }
     }
 
-    public static void onRenderArmorLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static void onRenderArmorLevel(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Player player = getCameraPlayer();
         if (player != null) {
             ClientConfig.AbstractArmorRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).armor;
@@ -40,7 +40,7 @@ public class GuiLayerHandler {
         }
     }
 
-    public static void onRenderToughnessLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, Identifier heightProviderLocation, boolean leftSide) {
+    public static void onRenderToughnessLevel(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, Identifier heightProviderLocation, boolean leftSide) {
         ClientConfig.ToughnessRowConfig config = OverflowingBars.CONFIG.get(ClientConfig.class).toughness;
         Player player = getCameraPlayer();
         if (config.leftSide == leftSide && config.armorToughnessBar && player != null) {
@@ -70,7 +70,7 @@ public class GuiLayerHandler {
         }
     }
 
-    public static void onRenderChatPanel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
+    public static void onRenderChatPanel(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
         if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) return;
         posY.mapAsInt((int value) -> value - ChatOffsetHelper.getChatOffsetY());
     }

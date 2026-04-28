@@ -4,7 +4,7 @@ import fuzs.overflowingbars.OverflowingBars;
 import fuzs.overflowingbars.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -30,7 +30,7 @@ public class HealthBarRenderer {
         this.tickCount++;
     }
 
-    public void renderPlayerHealth(GuiGraphics guiGraphics, int posX, int posY, Player player) {
+    public void renderPlayerHealth(GuiGraphicsExtractor guiGraphics, int posX, int posY, Player player) {
         Profiler.get().push(OverflowingBars.id("health").toString());
         int currentHealth = Mth.ceil(player.getHealth());
         boolean blink = this.healthBlinkTime > (long) this.tickCount
@@ -72,7 +72,7 @@ public class HealthBarRenderer {
         Profiler.get().pop();
     }
 
-    private void renderHearts(GuiGraphics guiGraphics, Player player, int posX, int posY, int heartOffsetByRegen, float maxHealth, int currentHealth, int displayHealth, int currentAbsorptionHealth, boolean blink) {
+    private void renderHearts(GuiGraphicsExtractor guiGraphics, Player player, int posX, int posY, int heartOffsetByRegen, float maxHealth, int currentHealth, int displayHealth, int currentAbsorptionHealth, boolean blink) {
         boolean hardcore = player.level().getLevelData().isHardcore();
         int normalHearts = Math.min(10, Mth.ceil((double) maxHealth / 2.0));
         int maxAbsorptionHearts = 20 - normalHearts;
@@ -148,7 +148,7 @@ public class HealthBarRenderer {
         WITHERED(Gui.HeartType.WITHERED),
         ABSORBING(Gui.HeartType.ABSORBING),
         FROZEN(Gui.HeartType.FROZEN),
-        ORANGE(0, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        LAYER(0, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
 
         private final Gui.@Nullable HeartType heartType;
         private final int textureIndexX;
@@ -175,7 +175,7 @@ public class HealthBarRenderer {
             this.canBlink = blink;
         }
 
-        public void renderHeart(GuiGraphics guiGraphics, int posX, int posY, boolean blinking, boolean halfHeart, boolean hardcore) {
+        public void renderHeart(GuiGraphicsExtractor guiGraphics, int posX, int posY, boolean blinking, boolean halfHeart, boolean hardcore) {
             if (this.heartType != null) {
                 Identifier identifier = this.heartType.getSprite(hardcore, halfHeart, blinking);
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, posX, posY, 9, 9);
@@ -203,7 +203,7 @@ public class HealthBarRenderer {
                 i = j + k;
             }
 
-            return (this == ORANGE ? 0 : 16) + (this.textureIndexX * 2 + i) * 9;
+            return (this == LAYER ? 0 : 16) + (this.textureIndexX * 2 + i) * 9;
         }
 
         public int getY(boolean hardcore) {
@@ -220,9 +220,9 @@ public class HealthBarRenderer {
             } else {
                 boolean inverse = OverflowingBars.CONFIG.get(ClientConfig.class).health.inverseColoring;
                 if (orange) {
-                    return absorbing || !inverse ? ORANGE : NORMAL;
+                    return absorbing || !inverse ? LAYER : NORMAL;
                 }
-                return absorbing ? ABSORBING : (inverse ? ORANGE : NORMAL);
+                return absorbing ? ABSORBING : (inverse ? LAYER : NORMAL);
             }
         }
     }

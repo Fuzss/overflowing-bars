@@ -1,7 +1,7 @@
 package fuzs.overflowingbars.client.gui;
 
 import fuzs.overflowingbars.OverflowingBars;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 public class BarOverlayRenderer {
     static final Identifier OVERFLOWING_ICONS_LOCATION = OverflowingBars.id("textures/gui/icons.png");
 
-    public static void renderHealthLevelBars(GuiGraphics guiGraphics, Player player, int leftHeight, boolean rowCount) {
+    public static void renderHealthLevelBars(GuiGraphicsExtractor guiGraphics, Player player, int leftHeight, boolean rowCount) {
         int posX = guiGraphics.guiWidth() / 2 - 91;
         int posY = guiGraphics.guiHeight() - leftHeight;
         HealthBarRenderer.INSTANCE.renderPlayerHealth(guiGraphics, posX, posY, player);
@@ -27,7 +27,7 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderArmorLevelBar(GuiGraphics guiGraphics, Player player, int leftHeight, boolean rowCount) {
+    public static void renderArmorLevelBar(GuiGraphicsExtractor guiGraphics, Player player, int leftHeight, boolean rowCount) {
         int posX = guiGraphics.guiWidth() / 2 - 91;
         int posY = guiGraphics.guiHeight() - leftHeight;
         ArmorBarRenderer.renderArmorBar(guiGraphics, posX, posY, player);
@@ -36,7 +36,7 @@ public class BarOverlayRenderer {
         }
     }
 
-    public static void renderToughnessLevelBar(GuiGraphics guiGraphics, Player player, int guiHeight, boolean rowCount, boolean leftSide, boolean vanillaLike) {
+    public static void renderToughnessLevelBar(GuiGraphicsExtractor guiGraphics, Player player, int guiHeight, boolean rowCount, boolean leftSide, boolean vanillaLike) {
         int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91);
         int posY = guiGraphics.guiHeight() - guiHeight;
         ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, leftSide, vanillaLike);
