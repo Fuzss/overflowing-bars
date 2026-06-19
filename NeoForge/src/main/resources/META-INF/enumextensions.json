@@ -1,7 +1,7 @@
 {
   "entries": [
     {
-      "enum": "net/minecraft/client/gui/Gui$HeartType",
+      "enum": "net/minecraft/client/gui/Hud$HeartType",
       "name": "OVERFLOWINGBARS_LAYER",
       "constructor": "(Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;)V",
       "parameters": {

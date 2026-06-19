@@ -12,6 +12,6 @@ dependencies {
 
 multiloader {
     mixins {
-        clientMixin("Gui\u0024HeartTypeFabricMixin")
+        clientMixin("Hud\u0024HeartTypeFabricMixin")
     }
 }

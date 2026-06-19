@@ -50,7 +50,7 @@ public class RowCountRenderer {
                 posX += 5;
             }
 
-            GuiGraphicsHelper.drawInBatch8xOutline(guiGraphics,
+            GuiGraphicsHelper.prepare8xTextOutline(guiGraphics,
                     font,
                     Component.literal(text),
                     posX,

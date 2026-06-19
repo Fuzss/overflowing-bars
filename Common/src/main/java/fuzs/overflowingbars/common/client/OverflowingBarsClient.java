@@ -12,8 +12,8 @@ import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;
 import fuzs.puzzleslib.common.api.client.event.v1.gui.CustomizeChatPanelCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.world.entity.player.Player;
 
 public class OverflowingBarsClient implements ClientModConstructor {
@@ -53,38 +53,38 @@ public class OverflowingBarsClient implements ClientModConstructor {
             });
         }
         context.registerGuiLayer(GuiLayersContext.ARMOR_LEVEL,
-                GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_LOCATION,
+                GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_ID,
                 (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
                     GuiLayerHandler.onRenderToughnessLevel(guiGraphics,
                             deltaTracker,
-                            GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_LOCATION,
+                            GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_ID,
                             true);
                 });
         context.registerGuiLayer(GuiLayersContext.FOOD_LEVEL,
-                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_LOCATION,
+                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_ID,
                 (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
-                    Gui gui = Minecraft.getInstance().gui;
-                    int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
+                    Hud hud = Minecraft.getInstance().gui.hud;
+                    int vehicleMaxHearts = hud.getVehicleMaxHearts(hud.getPlayerVehicleWithHealth());
                     if (vehicleMaxHearts == 0) {
                         GuiLayerHandler.onRenderToughnessLevel(guiGraphics,
                                 deltaTracker,
-                                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_LOCATION,
+                                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_ID,
                                 false);
                     }
                 });
         context.registerGuiLayer(GuiLayersContext.VEHICLE_HEALTH,
-                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION,
+                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_ID,
                 (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
-                    Gui gui = Minecraft.getInstance().gui;
-                    int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
+                    Hud hud = Minecraft.getInstance().gui.hud;
+                    int vehicleMaxHearts = hud.getVehicleMaxHearts(hud.getPlayerVehicleWithHealth());
                     if (vehicleMaxHearts != 0) {
                         GuiLayerHandler.onRenderToughnessLevel(guiGraphics,
                                 deltaTracker,
-                                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION,
+                                GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_ID,
                                 false);
                     }
                 });
-        context.addLeftStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_LOCATION, (Player player) -> {
+        context.addLeftStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_LEFT_ID, (Player player) -> {
             if (ChatOffsetHelper.toughnessRow(player)
                     && OverflowingBars.CONFIG.get(ClientConfig.class).toughness.leftSide) {
                 return 10 + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShift();
@@ -92,9 +92,9 @@ public class OverflowingBarsClient implements ClientModConstructor {
                 return 0;
             }
         });
-        context.addRightStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_LOCATION, (Player player) -> {
-            Gui gui = Minecraft.getInstance().gui;
-            int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
+        context.addRightStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_ID, (Player player) -> {
+            Hud hud = Minecraft.getInstance().gui.hud;
+            int vehicleMaxHearts = hud.getVehicleMaxHearts(hud.getPlayerVehicleWithHealth());
             if (vehicleMaxHearts == 0 && ChatOffsetHelper.toughnessRow(player) && !OverflowingBars.CONFIG.get(
                     ClientConfig.class).toughness.leftSide) {
                 return 10 + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShift();
@@ -102,16 +102,15 @@ public class OverflowingBarsClient implements ClientModConstructor {
                 return 0;
             }
         });
-        context.addRightStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION,
-                (Player player) -> {
-                    Gui gui = Minecraft.getInstance().gui;
-                    int vehicleMaxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
-                    if (vehicleMaxHearts != 0 && ChatOffsetHelper.toughnessRow(player) && !OverflowingBars.CONFIG.get(
-                            ClientConfig.class).toughness.leftSide) {
-                        return 10 + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShift();
-                    } else {
-                        return 0;
-                    }
-                });
+        context.addRightStatusBarHeightProvider(GuiLayerHandler.TOUGHNESS_LEVEL_RIGHT_MOUNTED_ID, (Player player) -> {
+            Hud hud = Minecraft.getInstance().gui.hud;
+            int vehicleMaxHearts = hud.getVehicleMaxHearts(hud.getPlayerVehicleWithHealth());
+            if (vehicleMaxHearts != 0 && ChatOffsetHelper.toughnessRow(player) && !OverflowingBars.CONFIG.get(
+                    ClientConfig.class).toughness.leftSide) {
+                return 10 + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShift();
+            } else {
+                return 0;
+            }
+        });
     }
 }

@@ -15,10 +15,9 @@ import net.minecraft.world.entity.player.Player;
 import org.jspecify.annotations.Nullable;
 
 public class GuiLayerHandler {
-    public static final Identifier TOUGHNESS_LEVEL_LEFT_LOCATION = OverflowingBars.id("toughness_level/left");
-    public static final Identifier TOUGHNESS_LEVEL_RIGHT_LOCATION = OverflowingBars.id("toughness_level/right");
-    public static final Identifier TOUGHNESS_LEVEL_RIGHT_MOUNTED_LOCATION = OverflowingBars.id(
-            "toughness_level/right/mounted");
+    public static final Identifier TOUGHNESS_LEVEL_LEFT_ID = OverflowingBars.id("toughness_level/left");
+    public static final Identifier TOUGHNESS_LEVEL_RIGHT_ID = OverflowingBars.id("toughness_level/right");
+    public static final Identifier TOUGHNESS_LEVEL_RIGHT_MOUNTED_ID = OverflowingBars.id("toughness_level/right/mounted");
 
     public static void onRenderPlayerHealth(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Player player = getCameraPlayer();
@@ -64,8 +63,8 @@ public class GuiLayerHandler {
     @Nullable
     private static Player getCameraPlayer() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui && minecraft.gameMode.canHurtPlayer()) {
-            return minecraft.gui.getCameraPlayer();
+        if (!minecraft.gui.hud.isHidden() && minecraft.gameMode.canHurtPlayer()) {
+            return minecraft.gui.hud.getCameraPlayer();
         } else {
             return null;
         }

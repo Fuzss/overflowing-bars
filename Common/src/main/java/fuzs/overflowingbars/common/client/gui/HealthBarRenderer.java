@@ -4,8 +4,8 @@ import fuzs.overflowingbars.common.OverflowingBars;
 import fuzs.overflowingbars.common.client.init.ModEnumConstants;
 import fuzs.overflowingbars.common.config.ClientConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -92,7 +92,7 @@ public class HealthBarRenderer {
             }
 
             // renders the black heart outline and background (only visible for half hearts)
-            this.blitHeart(Gui.HeartType.CONTAINER, guiGraphics, currentPosX, currentPosY, blink, false, hardcore);
+            this.blitHeart(Hud.HeartType.CONTAINER, guiGraphics, currentPosX, currentPosY, blink, false, hardcore);
             // then the first call to renderHeart renders the heart from the layer below in case the current layer heart is just half a heart
             // the second call renders the actual heart from the current layer
             if (currentHeart >= normalHearts) {
@@ -103,11 +103,11 @@ public class HealthBarRenderer {
                     boolean layer = currentAbsorptionHealth > maxAbsorptionHealth
                             && currentAbsorption + 1 <= (currentAbsorptionHealth - 1) % maxAbsorptionHealth + 1;
                     if (halfHeart && layer) {
-                        Gui.HeartType heartType = forPlayer(player, true, false);
+                        Hud.HeartType heartType = forPlayer(player, true, false);
                         this.blitHeart(heartType, guiGraphics, currentPosX, currentPosY, false, false, hardcore);
                     }
 
-                    Gui.HeartType heartType = forPlayer(player, true, layer);
+                    Hud.HeartType heartType = forPlayer(player, true, layer);
                     this.blitHeart(heartType, guiGraphics, currentPosX, currentPosY, false, halfHeart, hardcore);
                 }
             }
@@ -116,11 +116,11 @@ public class HealthBarRenderer {
                 boolean halfHeart = currentHeart * 2 + 1 == (displayHealth - 1) % 20 + 1;
                 boolean layer = displayHealth > 20 && currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1;
                 if (halfHeart && layer) {
-                    Gui.HeartType heartType = forPlayer(player, false, false);
+                    Hud.HeartType heartType = forPlayer(player, false, false);
                     this.blitHeart(heartType, guiGraphics, currentPosX, currentPosY, true, false, hardcore);
                 }
 
-                Gui.HeartType heartType = forPlayer(player,
+                Hud.HeartType heartType = forPlayer(player,
                         false,
                         layer || OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeFirstRow
                                 && currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1);
@@ -131,11 +131,11 @@ public class HealthBarRenderer {
                 boolean halfHeart = currentHeart * 2 + 1 == (currentHealth - 1) % 20 + 1;
                 boolean layer = currentHealth > 20 && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1;
                 if (halfHeart && layer) {
-                    Gui.HeartType heartType = forPlayer(player, false, false);
+                    Hud.HeartType heartType = forPlayer(player, false, false);
                     this.blitHeart(heartType, guiGraphics, currentPosX, currentPosY, false, false, hardcore);
                 }
 
-                Gui.HeartType heartType = forPlayer(player,
+                Hud.HeartType heartType = forPlayer(player,
                         false,
                         layer || OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeFirstRow
                                 && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1);
@@ -144,24 +144,24 @@ public class HealthBarRenderer {
         }
     }
 
-    private void blitHeart(Gui.HeartType heartType, GuiGraphicsExtractor guiGraphics, int posX, int posY, boolean blinking, boolean halfHeart, boolean hardcore) {
+    private void blitHeart(Hud.HeartType heartType, GuiGraphicsExtractor guiGraphics, int posX, int posY, boolean blinking, boolean halfHeart, boolean hardcore) {
         Identifier identifier = heartType.getSprite(hardcore, halfHeart, blinking);
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, posX, posY, 9, 9);
     }
 
     /**
-     * @see net.minecraft.client.gui.Gui.HeartType#forPlayer(Player)
+     * @see net.minecraft.client.gui.Hud.HeartType#forPlayer(Player)
      */
-    public static Gui.HeartType forPlayer(Player player, boolean absorbing, boolean layer) {
-        Gui.HeartType heartType = Gui.HeartType.forPlayer(player);
-        if (heartType != Gui.HeartType.NORMAL) {
+    public static Hud.HeartType forPlayer(Player player, boolean absorbing, boolean layer) {
+        Hud.HeartType heartType = Hud.HeartType.forPlayer(player);
+        if (heartType != Hud.HeartType.NORMAL) {
             return heartType;
         } else {
             boolean inverse = OverflowingBars.CONFIG.get(ClientConfig.class).health.inverseColoring;
             if (layer) {
                 return absorbing || !inverse ? ModEnumConstants.LAYER_HEART_TYPE : heartType;
             } else {
-                return absorbing ? Gui.HeartType.ABSORBING : (inverse ? ModEnumConstants.LAYER_HEART_TYPE : heartType);
+                return absorbing ? Hud.HeartType.ABSORBING : (inverse ? ModEnumConstants.LAYER_HEART_TYPE : heartType);
             }
         }
     }

@@ -1,15 +1,15 @@
 package fuzs.overflowingbars.common.client.init;
 
 import fuzs.overflowingbars.common.OverflowingBars;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 
 import java.util.Locale;
 import java.util.function.Function;
 
 public class ModEnumConstants {
-    public static final Gui.HeartType LAYER_HEART_TYPE = getEnumConstant(OverflowingBars.id("layer"),
-            Gui.HeartType::valueOf);
+    public static final Hud.HeartType LAYER_HEART_TYPE = getEnumConstant(OverflowingBars.id("layer"),
+            Hud.HeartType::valueOf);
 
     public static void bootstrap() {
         // NO-OP
