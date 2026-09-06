@@ -26,6 +26,12 @@ public class ClientConfig implements ConfigCore {
         @Config(description = "Shift the bar up or down by specified number of icon rows. Allows for better mod compatibility.")
         @Config.IntRange(min = -5, max = 5)
         public int manualRowShift = 0;
+        @Config(description = "Shift the bar up or down by specified number of pixels. Allows for better mod compatibility.")
+        @Config.IntRange(min = -60, max = 60)
+        public int manualRowShiftY = 0;
+        @Config(description = "Shift the bar left or right by specified number of pixels. Allows for better mod compatibility.")
+        @Config.IntRange(min = -60, max = 60)
+        public int manualRowShiftX = 0;
 
         public int manualRowShift() {
             return this.manualRowShift * 10;

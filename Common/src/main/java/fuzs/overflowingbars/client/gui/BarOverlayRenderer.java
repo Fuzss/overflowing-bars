@@ -2,6 +2,7 @@ package fuzs.overflowingbars.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.overflowingbars.OverflowingBars;
+import fuzs.overflowingbars.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -14,8 +15,8 @@ public class BarOverlayRenderer {
 
     public static void renderHealthLevelBars(Minecraft minecraft, GuiGraphics guiGraphics, int leftHeight, boolean rowCount) {
         if (minecraft.getCameraEntity() instanceof Player player) {
-            int posX = guiGraphics.guiWidth() / 2 - 91;
-            int posY = guiGraphics.guiHeight() - leftHeight;
+            int posX = guiGraphics.guiWidth() / 2 - 91 + OverflowingBars.CONFIG.get(ClientConfig.class).health.manualRowShiftX;
+            int posY = guiGraphics.guiHeight() - leftHeight + OverflowingBars.CONFIG.get(ClientConfig.class).health.manualRowShiftY;
             HealthBarRenderer.INSTANCE.renderPlayerHealth(guiGraphics, posX, posY, player, minecraft.getProfiler());
             if (rowCount) {
                 int allHearts = Mth.ceil(player.getHealth());
@@ -28,8 +29,8 @@ public class BarOverlayRenderer {
 
     public static void renderArmorLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int leftHeight, boolean rowCount, boolean unmodified) {
         if (minecraft.getCameraEntity() instanceof Player player) {
-            int posX = guiGraphics.guiWidth() / 2 - 91;
-            int posY = guiGraphics.guiHeight() - leftHeight;
+            int posX = guiGraphics.guiWidth() / 2 - 91 + OverflowingBars.CONFIG.get(ClientConfig.class).armor.manualRowShiftX;
+            int posY = guiGraphics.guiHeight() - leftHeight + OverflowingBars.CONFIG.get(ClientConfig.class).armor.manualRowShiftY;
             ArmorBarRenderer.renderArmorBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), unmodified);
             if (rowCount && !unmodified) {
                 RowCountRenderer.drawBarRowCount(guiGraphics, posX - 2, posY, player.getArmorValue(), true,
@@ -41,8 +42,8 @@ public class BarOverlayRenderer {
 
     public static void renderToughnessLevelBar(Minecraft minecraft, GuiGraphics guiGraphics, int guiHeight, boolean rowCount, boolean leftSide, boolean unmodified) {
         if (minecraft.getCameraEntity() instanceof Player player) {
-            int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91);
-            int posY = guiGraphics.guiHeight() - guiHeight;
+            int posX = guiGraphics.guiWidth() / 2 + (leftSide ? -91 : 91) + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShiftX;
+            int posY = guiGraphics.guiHeight() - guiHeight + OverflowingBars.CONFIG.get(ClientConfig.class).toughness.manualRowShiftY;
             ArmorBarRenderer.renderToughnessBar(guiGraphics, posX, posY, player, minecraft.getProfiler(), leftSide,
                     unmodified
             );
