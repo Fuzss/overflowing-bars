@@ -21,6 +21,8 @@ public class ClientConfig implements ConfigCore {
         public boolean allowCount = true;
         @Config(description = "Show colorful icons on the front row, not just on all subsequent rows.")
         public boolean colorizeFirstRow = false;
+        @Config(description = "Icons get increasingly colorful with more rows.")
+        public boolean colorizeInGradient = false;
         @Config(description = "Use vanilla's icons on all front rows, use custom colored icons on the background row.")
         public boolean inverseColoring = false;
         @Config(description = "Shift the bar up or down by specified number of icon rows. Allows for better mod compatibility.")
