@@ -66,7 +66,9 @@ public class HealthBarRenderer {
 
     private void renderHearts(GuiGraphics guiGraphics, Player player, int posX, int posY, int heartOffsetByRegen, float maxHealth, int currentHealth, int displayHealth, int currentAbsorptionHealth, boolean blink) {
         boolean hardcore = player.level().getLevelData().isHardcore();
+        // The number of heart slots to be shown on the hotbar (maximum of 10).
         int normalHearts = Math.min(10, Mth.ceil((double) maxHealth / 2.0));
+        // Absorption hearts are capped to completely filling a second row (?)
         int maxAbsorptionHearts = 20 - normalHearts;
         int absorptionHearts = Math.min(20 - normalHearts, Mth.ceil((double) currentAbsorptionHealth / 2.0));
 
@@ -75,10 +77,12 @@ public class HealthBarRenderer {
             int currentPosX = posX + (currentHeart % 10) * 8;
             int currentPosY = posY - (currentHeart / 10) * 10;
 
+            // q: is this how it works? I thought absorption did not affect the shaking hearts animation. I might be stupid though
             if (currentHealth + currentAbsorptionHealth <= 4) {
                 currentPosY += this.random.nextInt(2);
             }
 
+            // Jiggle one specific heart of the normal row for the regen animation
             if (currentHeart < normalHearts && heartOffsetByRegen == currentHeart) {
                 currentPosY -= 2;
             }
@@ -94,35 +98,51 @@ public class HealthBarRenderer {
                 if (currentAbsorption < currentAbsorptionHealth) {
                     int maxAbsorptionHealth = maxAbsorptionHearts * 2;
                     boolean halfHeart = currentAbsorption + 1 == currentAbsorptionHealth % maxAbsorptionHealth;
-                    boolean orange = currentAbsorptionHealth > maxAbsorptionHealth && currentAbsorption + 1 <= (currentAbsorptionHealth - 1) % maxAbsorptionHealth + 1;
-                    if (halfHeart && orange) {
-                        ModHeartType.forPlayer(player, true, false).renderHeart(guiGraphics, currentPosX, currentPosY, false, false, hardcore);
+                    boolean notBottomLayer = currentAbsorptionHealth > maxAbsorptionHealth && currentAbsorption + 1 <= (currentAbsorptionHealth - 1) % maxAbsorptionHealth + 1;
+                    boolean inSecondPhase = currentHeart * 2 + 1 > (currentAbsorptionHealth - 1) % 20 + 1;
+                    int gradient = (currentAbsorptionHealth / 20) + inSecondPhase && notBottomLayer ? 0 : 1;
+                    if (halfHeart && notBottomLayer) {
+                        ModHeartType.forPlayer(player, true, gradient - 1).renderHeart(guiGraphics, currentPosX, currentPosY, false, false, hardcore);
                     }
-                    ModHeartType.forPlayer(player, true, orange).renderHeart(guiGraphics, currentPosX, currentPosY, false, halfHeart, hardcore);
+                    ModHeartType.forPlayer(player, true, gradient).renderHeart(guiGraphics, currentPosX, currentPosY, false, halfHeart, hardcore);
                 }
             }
 
             if (blink && currentHeart * 2 < Math.min(20, displayHealth)) {
                 boolean halfHeart = currentHeart * 2 + 1 == (displayHealth - 1) % 20 + 1;
-                boolean orange = displayHealth > 20 && currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1;
-                if (halfHeart && orange) {
-                    ModHeartType.forPlayer(player, false, false).renderHeart(guiGraphics, currentPosX, currentPosY, true, false, hardcore);
+                boolean notBottomLayer = displayHealth > 20 && currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1;
+                if (halfHeart && notBottomLayer) {
+                    ModHeartType.forPlayer(player, false, gradient - 1).renderHeart(guiGraphics, currentPosX, currentPosY, true, false, hardcore);
                 }
-                ModHeartType heartType = ModHeartType.forPlayer(player, false, orange || OverflowingBars.CONFIG.get(
-                        ClientConfig.class).health.colorizeFirstRow &&
-                        currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1);
+                boolean inSecondPhase = currentHeart * 2 + 1 > (displayHealth - 1) % 20 + 1;
+                int gradient = (displayHealth / 20) + inSecondPhase && notBottomLayer ? 0 : 1;
+                if (
+                    OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeFirstRow
+                 && OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeInGradient
+                 && currentHeart * 2 + 1 <= (displayHealth - 1) % 20 + 1
+                ) {
+                    gradient = 2;
+                }
+                ModHeartType heartType = ModHeartType.forPlayer(player, false, gradient);
                 heartType.renderHeart(guiGraphics, currentPosX, currentPosY, true, halfHeart, hardcore);
             }
 
             if (currentHeart * 2 < Math.min(20, currentHealth)) {
                 boolean halfHeart = currentHeart * 2 + 1 == (currentHealth - 1) % 20 + 1;
-                boolean orange = currentHealth > 20 && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1;
-                if (halfHeart && orange) {
+                boolean notBottomLayer = currentHealth > 20 && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1;
+                if (halfHeart && notBottomLayer) {
                     ModHeartType.forPlayer(player, false, false).renderHeart(guiGraphics, currentPosX, currentPosY, false, false, hardcore);
                 }
-                ModHeartType heartType = ModHeartType.forPlayer(player, false, orange || OverflowingBars.CONFIG.get(
-                        ClientConfig.class).health.colorizeFirstRow &&
-                        currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1);
+                boolean inSecondPhase = currentHeart * 2 + 1 > (currentHealth - 1) % 20 + 1;
+                int gradient = (currentHealth / 20) + inSecondPhase && notBottomLayer ? 0 : 1;
+                if (
+                    OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeFirstRow
+                 && OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeInGradient
+                 && currentHeart * 2 + 1 <= (currentHealth - 1) % 20 + 1
+                ) {
+                    gradient = 2;
+                }
+                ModHeartType heartType = ModHeartType.forPlayer(player, false, gradient);
                 heartType.renderHeart(guiGraphics, currentPosX, currentPosY, false, halfHeart, hardcore);
             }
 
@@ -137,7 +157,13 @@ public class HealthBarRenderer {
         WITHERED(Gui.HeartType.WITHERED),
         ABSORBING(Gui.HeartType.ABSORBING),
         FROZEN(Gui.HeartType.FROZEN),
-        ORANGE(0, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL2(0, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL3(0, 5, 6, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL4(0, 7, 8, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL5(0, 9, 10, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL6(4, 3, 4, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL7(4, 5, 6, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
+        NORMAL8(4, 7, 8, BarOverlayRenderer.OVERFLOWING_ICONS_LOCATION, true);
 
         @Nullable
         private final Gui.HeartType heartType;
@@ -186,14 +212,39 @@ public class HealthBarRenderer {
                 i = j + k;
             }
 
-            return (this == ORANGE ? 0 : 16) + (this.textureIndexX * 2 + i) * 9;
+            return (this.isGradient() ? 0 : 16) + (this.textureIndexX * 2 + i) * 9;
         }
 
         public int getY(boolean hardcore) {
             return (hardcore ? this.hardcoreIndexY : this.textureIndexY) * 9;
         }
 
-        public static ModHeartType forPlayer(Player player, boolean absorbing, boolean orange) {
+        public static ModHeartType ofGradient(int gradient) {
+            switch (gradient) {
+                case 1:
+                    return NORMAL;
+                case 2:
+                    return NORMAL2;
+                case 3:
+                    return NORMAL3;
+                case 4:
+                    return NORMAL4;
+                case 5:
+                    return NORMAL5;
+                case 6:
+                    return NORMAL6;
+                case 7:
+                    return NORMAL7;
+                case 8:
+                    return NORMAL8;
+            }
+        }
+
+        public static boolean isGradient() {
+            return this == NORMAL2 || this == NORMAL3 || this == NORMAL4 || this == NORMAL5 || this == NORMAL6;
+        }
+
+        public static ModHeartType forPlayer(Player player, boolean absorbing, int gradient) {
             if (player.hasEffect(MobEffects.WITHER)) {
                 return WITHERED;
             } else if (player.hasEffect(MobEffects.POISON)) {
@@ -201,11 +252,18 @@ public class HealthBarRenderer {
             } else if (player.isFullyFrozen()) {
                 return FROZEN;
             } else {
+                int gradient_calc = ((gradient - 1) + 8) % 8 + 1;
                 boolean inverse = OverflowingBars.CONFIG.get(ClientConfig.class).health.inverseColoring;
-                if (orange) {
-                    return absorbing || !inverse ? ORANGE : NORMAL;
+                boolean use_gradient = OverflowingBars.CONFIG.get(ClientConfig.class).health.colorizeInGradient;
+                if (inverse) {
+                    gradient_calc = 9 - gradient_calc;
                 }
-                return absorbing ? ABSORBING : (inverse ? ORANGE : NORMAL);
+                if (!use_gradient) {
+                    if (gradient_calc >= 2) {
+                        gradient_calc = 2;
+                    }
+                }
+                return absorbing ? ABSORBING : ofGradient(gradient_calc);
             }
         }
     }
