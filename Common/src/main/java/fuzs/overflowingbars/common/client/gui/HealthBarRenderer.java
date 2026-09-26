@@ -36,10 +36,10 @@ public class HealthBarRenderer {
         boolean blink = this.healthBlinkTime > (long) this.tickCount
                 && (this.healthBlinkTime - (long) this.tickCount) / 3L % 2L == 1L;
         long millis = Util.getMillis();
-        if (currentHealth < this.lastHealth && player.invulnerableTime > 0) {
+        if (currentHealth < this.lastHealth && player.isTemporarilyInvulnerable()) {
             this.lastHealthTime = millis;
             this.healthBlinkTime = this.tickCount + 20;
-        } else if (currentHealth > this.lastHealth && player.invulnerableTime > 0) {
+        } else if (currentHealth > this.lastHealth && player.isTemporarilyInvulnerable()) {
             this.lastHealthTime = millis;
             this.healthBlinkTime = this.tickCount + 10;
         }

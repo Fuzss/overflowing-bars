@@ -9,7 +9,6 @@ import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;
-import fuzs.puzzleslib.common.api.client.event.v1.gui.CustomizeChatPanelCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -26,7 +25,6 @@ public class OverflowingBarsClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ClientTickEvents.START.register(HealthBarRenderer.INSTANCE::onStartTick);
-        CustomizeChatPanelCallback.EVENT.register(GuiLayerHandler::onRenderChatPanel);
     }
 
     @Override

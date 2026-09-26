@@ -2,11 +2,9 @@ package fuzs.overflowingbars.common.client.handler;
 
 import fuzs.overflowingbars.common.OverflowingBars;
 import fuzs.overflowingbars.common.client.gui.BarOverlayRenderer;
-import fuzs.overflowingbars.common.client.helper.ChatOffsetHelper;
 import fuzs.overflowingbars.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.gui.v2.ScreenHelper;
-import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -68,13 +66,5 @@ public class GuiLayerHandler {
         } else {
             return null;
         }
-    }
-
-    public static void onRenderChatPanel(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) {
-        if (!OverflowingBars.CONFIG.get(ClientConfig.class).armor.moveChatAboveArmor) {
-            return;
-        }
-
-        posY.mapAsInt((int value) -> value - ChatOffsetHelper.getChatOffsetY());
     }
 }
